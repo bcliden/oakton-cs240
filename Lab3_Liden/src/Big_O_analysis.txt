@@ -1,0 +1,27 @@
+#	Big-O Analysis of Lab 3
+#
+#	author: Benjamin Liden
+#	date: 2/15/2021
+#	professor: I. Temesvari
+#	course: CS240
+
+ArrayBackedUnsortedType.ShiftRight implementation:
+	This implementation saves the tail item first, then proceeds backwards through 
+		the array, shifting the lower item up (right) one cell. At worst, this 
+		implementation will run for the entire length of the array.
+	Runtime: O(n)
+
+ArrayBackedUnsortedType.DeleteItem (new) implementation:
+	This new implementation will delete ALL items matching the given parameter.
+	Algorithmically, it walks through the array and compares against the item to be deleted. 
+		1. If not matching, we increment the position and check again.
+		2. If matching, we put the last item into the current position, then decrement length by one.
+			This effectively removes the item from usable memory (yes, it's still there...).
+			We do not increment position in this case so that the replaced item will be checked too.
+		
+	In cases where every element is deleted, they are all accessed once.
+		Likewise, if none are deleted, the function walks the whole array. 
+		When one or two are deleted, the runtime of work still
+			matches the original array length (all items are checked).
+		
+	Runtime: O(n)
