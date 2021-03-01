@@ -1,53 +1,17 @@
-/*
- * ItemType.cpp
+/**
+ * Modified by Benjamin Liden
+ * 	on 2/27/21
+ * 	for Prof. Temesvari's CS240
  *
- *  Created on: Feb 27, 2021
- *      Author: Ben
+ * 	Original file from: CS240SortedArray.zip
+ *
+ * 	See added private member function: doubleArray
+ * 	See added destructor
  */
 
 #include "sorted_array.h"
 
-int SortedType::operator*(const SortedType &op) {
-	int product = 0;
-//try{
-	if (length == op.length) {
-		for (int i = 0; i < length; i++) {
-			product += info[i].GetValue() * op.info[i].GetValue();
-		}
-	} else {
-		throw ArrayLengthMismatch();
-	}
-//}
-//catch(ArrayLengthMismatch& err){
-//	cout << err.what() << endl;
-//}
-
-	return product;
-}
-
-SortedType SortedType::operator++() { //pre-increment: increases the size of the info array by 1.
-	ItemType *infoCopy = new ItemType[MAX_ITEMS + 1];
-	for (int i = 0; i < MAX_ITEMS; i++) {
-		infoCopy[i] = info[i];
-	}
-	delete[] info;
-	MAX_ITEMS++;
-	info = infoCopy;
-	return *this;
-}
-
-SortedType SortedType::operator++(int) { //post-increment: increases the size of the info array by 1.
-	ItemType *infoCopy = new ItemType[MAX_ITEMS + 1];
-	for (int i = 0; i < MAX_ITEMS; i++) {
-		infoCopy[i] = info[i];
-	}
-	delete[] info;
-	MAX_ITEMS++;
-	info = infoCopy;
-	return *this;
-}
-
-std::ostream& operator<<(std::ostream &out, const SortedType list) {
+std::ostream& operator<<(std::ostream &out, const SortedType &list) {
 	if (list.length == 0) {
 		out << "Empty list.";
 	}
@@ -64,6 +28,11 @@ SortedType::SortedType() {
 	info = new ItemType[MAX_ITEMS];
 	currentPos = -1;
 	length = 0;
+}
+
+// added necessary destructor dynamic memory is in use
+SortedType::~SortedType() {
+	delete[] info;
 }
 
 void SortedType::MakeEmpty() {
@@ -122,25 +91,26 @@ void SortedType::DeleteItem(ItemType item) {
 void SortedType::PutItem(ItemType item) {
 	bool moreToSearch;
 	int location = 0;
-	//Make some room for one more.
+
+	// If full, expand array size
 	if (IsFull()) {
-		//enlarge the list by 1
-		++(*this);   //use pre-increment
-		//(*this)++:   //use post-increment
+		expandArray();
 	}
 	moreToSearch = (location < length);
 	while (moreToSearch) {
-		switch (item.ComparedTo(info[location])) {
-			case LESS:
-			case EQUAL:
-				moreToSearch = false;
-				break;
-			case GREATER:
-				location++;
-				moreToSearch = (location < length);
-				break;
+		RelationType r = item.ComparedTo(info[location]);
+		switch (r) {
+		case LESS:
+		case EQUAL:
+			moreToSearch = false;
+			break;
+		case GREATER:
+			location++;
+			moreToSearch = (location < length);
+			break;
 		}
 	}
+	// then, move items AFTER location down one slot
 	for (int index = length; index > location; index--)
 		info[index] = info[index - 1];
 	info[location] = item;
@@ -159,4 +129,27 @@ ItemType SortedType::GetNextItem()
 {
 	currentPos++;
 	return info[currentPos];
+}
+
+/**
+ * Extend the memory capacity of the current array by 2 * MAX_LENGTH
+ *
+ * Function added as part of Lab4!
+ */
+void SortedType::expandArray() {
+	/**
+	 * NOTE to self:
+	 * No need to update the currentPos as it's index-based, not memory pointer based.
+	 */
+	int expandedMaxItems = MAX_ITEMS * 2;
+	ItemType *copy = new ItemType[expandedMaxItems];
+
+	// copy over ONLY logically important values (length), not MAX_LENGTH
+	for (int i = 0; i < length; i++) {
+		copy[i] = info[i];
+	}
+
+	delete[] info; // delete original info
+	MAX_ITEMS = expandedMaxItems; // set new MAX_ITEMS size
+	info = copy; // set item pointer to new array
 }

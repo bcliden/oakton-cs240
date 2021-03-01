@@ -1,0 +1,31 @@
+```
+Author:		Benjamin Liden
+Date: 		2/28/2021
+Assignment: Lab 4
+Class: 		CS240
+Professor: 	I. Temesvari
+```
+
+## Big O analysis for UnsortedType.expandArray
+
+The potential runtime of expanding this class 2x is significant. 
+	My present implementation copies over all non-garbage entries into an array of 2x size. 
+	ExpandArray iterates, at worst, over MAX_LENGTH, which would be O(n).
+
+As the array grows in size, doubling each time over, it gets much more expensive 
+	to spend time copying, especially compared to insertion in a linked list.
+	This still maintains O(n) as the list grows huge, as the number of entries 
+	copied can not exceed the present length.
+
+I do think that the time for the O.S. to find a contiguous chunk of memory will
+	eventually be significant. But, accessing values remains very quick compared
+	to a linked list of similar size. It would be fun to write a hybrid approach 
+	that links contiguous blocks of memory. That could yield good results.
+	
+One last note, keeping currentPosition tracked correctly can be tricky when 
+	maintaining a sorted list in this manner. Should it stay on the 
+	same _array_ index or track the same _ItemType_ instance? I left it tracking the
+	array index for now, but I could see a case for both.
+	
+ Big-O runtime of UnsortedType.expandArray: O(n)
+ 

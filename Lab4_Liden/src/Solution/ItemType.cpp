@@ -1,8 +1,7 @@
-/*
- * ItemType.cpp
+/**
+ * 	Original file from: CS240SortedArray.zip
  *
- *  Created on: Feb 27, 2021
- *      Author: Ben
+ * 	Not modified in any meaningful way.
  */
 
 #include "ItemType.h"

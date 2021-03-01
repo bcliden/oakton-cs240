@@ -1,7 +1,11 @@
 #pragma once
 
-// The following declarations and definitions go into file 
-// ItemType.h. 
+/**
+ * 	Original file from: CS240SortedArray.zip
+ *
+ * 	Not modified in any meaningful way.
+ */
+
 #include <fstream>
 #include <iostream>
 
