@@ -1,9 +1,7 @@
 #pragma once
 
-namespace LinkedQueueUtil {
-	typedef int Item;
-	struct Node {
-		Item info;
-		Node *next;
-	};
-}
+template<class Item>
+struct Node {
+	Item info;
+	Node<Item> *next;
+};

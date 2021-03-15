@@ -1,9 +1,9 @@
 //============================================================================
-// Name        : Lab6_Liden.cpp
+// Name        : Lab 6
 // Author      : Benjamin Liden
-// Version     :
-// Copyright   : n/a
-// Description : Hello World in C++, Ansi-style
+// Date        : 3/14/2020
+// Professor   : Ivan Temesvari
+// Course 	   : CS240 Data Structures
 //============================================================================
 
 #include <iostream>
@@ -11,20 +11,30 @@
 #include <cassert>
 #include "LinkedQueue/LinkedQueue.h"
 
-std::string const verifiedOutput = R"(8 6 7 5 3 0 9 
-8
-6
-7 5 3 0 9 
-7 5 3 0 9 
-7
-5 3 0 9 
-7 5 3 0 9 
-)";
+void testBasicQueueFunctions();
+void testIterator();
+void testTemplate();
 
 int main() {
+	testBasicQueueFunctions();
+	testIterator();
+	testTemplate();
+	std::cout << "Tests finished without error." << std::endl;
+	return 0;
+}
+
+void testBasicQueueFunctions() {
+	// @formatter:off
+	std::string const verifiedOutput = R"(8675309
+8
+6
+75309
+)";
+	// @formatter:on
+
 	std::stringstream testLog;
 
-	LinkedQueue q;
+	LinkedQueue<int> q;
 	q.Enqueue(8);
 	q.Enqueue(6);
 	q.Enqueue(7);
@@ -41,19 +51,78 @@ int main() {
 	testLog << item << std::endl;
 	q.Print(testLog);
 
-	LinkedQueue q2(q); //call copy constructor
-	q2.Print(testLog);
-	q2.Dequeue(item);
-	testLog << item << std::endl;
-	q2.Print(testLog);
-
-	LinkedQueue q1;
-	q1 = q; //call assignment operator=
-	q1.Print(testLog);
-
-	std::cout << testLog.str() << std::endl;
+//	std::cout << testLog.str() << std::endl;
+//	std::cout << verifiedOutput << std::endl;
 
 	assert(testLog.str() == verifiedOutput);
-	std::cout << "Tests finished without error." << std::endl;
-	return 0;
+}
+
+void testIterator() {
+	// @formatter:off
+	std::string const verifiedOutput = R"(8675309
+8675309
+)";
+	// @formatter:on
+
+	std::stringstream testLog;
+
+	LinkedQueue<int> q;
+	q.Enqueue(8);
+	q.Enqueue(6);
+	q.Enqueue(7);
+	q.Enqueue(5);
+	q.Enqueue(3);
+	q.Enqueue(0);
+	q.Enqueue(9);
+
+	// iterate multiple ways
+	for (auto &x : q) { // ranged iterator
+		testLog << x;
+	}
+	testLog << std::endl;
+
+	for (auto it = q.begin(); it != q.end(); ++it) { // ranged iterator (under the hood)
+		testLog << *it;
+	}
+	testLog << std::endl;
+
+//	std::cout << testLog.str() << std::endl;
+//	std::cout << verifiedOutput << std::endl;
+
+	assert(testLog.str() == verifiedOutput);
+}
+
+void testTemplate() {
+	// @formatter:off
+	std::string const verifiedOutput = R"(abcdefg
+abcdefg
+)";
+	// @formatter:on
+
+	std::stringstream testLog;
+
+	LinkedQueue<char> q;
+	q.Enqueue('a');
+	q.Enqueue('b');
+	q.Enqueue('c');
+	q.Enqueue('d');
+	q.Enqueue('e');
+	q.Enqueue('f');
+	q.Enqueue('g');
+
+	// iterate multiple ways
+	for (auto &x : q) { // ranged iterator
+		testLog << x;
+	}
+	testLog << std::endl;
+
+	for (auto it = q.begin(); it != q.end(); ++it) { // ranged iterator (under the hood)
+		testLog << *it;
+	}
+	testLog << std::endl;
+
+//	std::cout << testLog.str() << std::endl;
+//	std::cout << verifiedOutput << std::endl;
+
+	assert(testLog.str() == verifiedOutput);
 }
