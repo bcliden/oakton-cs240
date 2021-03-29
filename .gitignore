@@ -1,3 +1,4 @@
 *.epub
 PlusCode6/
-.metadata/
+**/.metadata/*
+**/.settings/*
