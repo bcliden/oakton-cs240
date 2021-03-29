@@ -1,0 +1,40 @@
+//============================================================================
+// Name        : Lab 7
+// Author      : Benjamin Liden
+// Date        : Mar 29, 2021
+// Professor   : Ivan Temesvari
+// Course	   : CS240 Data Structures
+//============================================================================
+
+	The original NumPaths function uses no additional memory (aside from many stack frames),
+but must calculate every path (minus one), regardless of whether it has been calculated or not.
+A 5x5 grid, for instance, has 70 paths and will run 69 times. This would be akin to O(n) runtime.
+
+	The improved memoized NumPaths function uses additional memory in the form of 
+a cache (size N x N x sizeof(data type)). For a 5x5 grid of integers, the memory usage is
+5x5x8 = 200 bytes. Those cells are all initialized to a default "uninitialized" value, which
+requires n*n operations to perform. Given that outset of memory though, the memoized function 
+runs much more efficiently. For a given 5x5 grid, this improved method runs 33 times, calculating
+only 16 new results and reusing 9 memoized results.
+
+	The memoized version is much more efficient as N increases. For a 15x15 grid, 40,116,600 paths are
+present. While the regular method runs 40,116,599 times, the memoized version is called a mere 393 times
+(this includes 196 calculated results and 169 cached values used). This would be similar to O(logn) runtime.
+I believe these saved stack frames (and stack depth itself) make the initial memory outlay for the cache
+worth the effort. Memory is cheaper than processing power in many cases.
+
+For a given n > 1, the memoized algorithm will only calculate (n-1)^2 answers and will reuse (n-2)^2 cached answers.
+The function will be called ((n-1)^2 + (n-2)^2) + (2n - 2) times.
+
+For a 15x15 grid:
+calculations: 14^2 = 196
+cached answers:	13^2 = 169
+total function calls:  (14^2 + 13^2) + (2*15 - 2) = 393
+(these are confirmed in the test testHugeMemoizedVersion in Lab7_Liden)
+
+SIZE	 | TIMES CALLED    | CALCULATIONS		| CACHE USES
+5x5 grid | called 33 times | Had to calculate: 16 | Got from cache: 9
+4x4 grid | called 19 times | Had to calculate: 9 | Got from cache: 4
+3x3 grid | called 9 times | Had to calculate: 4 | Got from cache: 1
+2x2 grid | called 3 times | Had to calculate: 1 | Got from cache: 0
+1x1 grid | called 1 times | Had to calculate: 0 | Got from cache: 0

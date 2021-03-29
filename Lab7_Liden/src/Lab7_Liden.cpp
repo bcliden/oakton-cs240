@@ -1,72 +1,98 @@
 //============================================================================
-// Name        : Lab7_Liden.cpp
+// Name        : Lab 7
 // Author      : Benjamin Liden
-// Version     :
-// Copyright   : n/a
-// Description : Hello World in C++, Ansi-style
+// Date        : Mar 29, 2021
+// Professor   : Ivan Temesvari
+// Course	   : CS240 Data Structures
 //============================================================================
 
 #include <iostream>
-#include <optional>
-#include <vector>
+#include <cassert>
+#include "Memoized.h"
 
-template<class T, int size>
-class Memoized {
-public:
-	Memoized()
-//	: data(new T[size][size])
-	{
-		// this is an annoying way to initialize the dynamic array
-		this->data = new T* [size];
-		for (int i = 0; i < size; i++){
-			this->data[i] = new T*[size];
-		}
-		this->makeEmpty();
-	}
+void testRegularVersion();
+void testMemoizedVersion();
+void testLargeMemoizedVersion();
+void testLargeRegularVersion();
+void testHugeMemoizedVersion();
 
-	~Memoized(){
-		delete[] this->data;
-	}
-
-	void makeEmpty() {
-		for (auto i = 0; i < size; i++) {
-			for (auto j = 0; j < size; j++) {
-				*this->data[i][j] = nullptr;
-			}
-		}
-	}
-
-	void storeAnswer(int row, int col, T item) {
-		*this->data[row][col] = item;
-	}
-
-	bool hasAnswer(int row, int col) {
-		T result = this->data[row][col];
-		return result == nullptr;
-	}
-
-	T getAnswer(int row, int col) {
-		return *this->data[row][col];
-	}
-
-private:
-	T **data;
-};
-
-template <class M, int n>
-int NumPaths(int row, int col, M m) {
+int timesCalculated = 0;
+/*
+ * This is the original, fixed recursive NumPaths solution.
+ */
+int NumPaths(int row, int col, int n) {
 	if (row == n || col == n) {
 		return 1;
 	}
-	return NumPaths<M, n>(row + 1, col, m) + NumPaths<M, n>(row, col + 1, m);
+	++timesCalculated;
+	return NumPaths(row + 1, col, n) + NumPaths(row, col + 1, n);
 }
 
-int const max_len = 6;
-
 int main() {
-	Memoized<int, max_len> m {};
-	int res = NumPaths<Memoized<int, max_len>, max_len>(1, 1, m);
-	std::cout << res << std::endl;
+	testRegularVersion();
+	testLargeRegularVersion();
+	testMemoizedVersion();
+	testLargeMemoizedVersion();
+	testHugeMemoizedVersion();
+
+	printf("Tests finished without error\n");
 	return 0;
 }
 
+void testRegularVersion() {
+	int const grid_size = 5;
+	timesCalculated = 0;
+
+	int result = NumPaths(1, 1, grid_size);
+
+//	printf("%d times - %d paths\n", timesCalculated, result);
+	assert(result == 70);
+	assert(timesCalculated == 69);
+}
+
+void testMemoizedVersion() {
+	int const grid_size = 5;
+	memoizedVersion::Metrics metrics;
+	int result = memoizedVersion::NumPaths<grid_size>(1, 1, metrics);
+
+//	metrics.print();
+	assert(result == 70);
+	assert(metrics.calledTimes == 33);
+	assert(metrics.hadToCalculate == 16);
+	assert(metrics.gotFromCache == 9);
+}
+
+void testLargeRegularVersion() {
+	int const larger_size = 15;
+	timesCalculated = 0;
+
+	int result = NumPaths(1, 1, larger_size);
+
+//	printf("%d times - %d paths\n", timesCalculated, result);
+	assert(result == 40116600);
+	assert(timesCalculated == 40116599);
+}
+
+void testLargeMemoizedVersion() {
+	int const larger_size = 15;
+	memoizedVersion::Metrics metrics;
+	int result = memoizedVersion::NumPaths<larger_size>(1, 1, metrics);
+
+//	metrics.print();
+	assert(result == 40116600);
+	assert(metrics.calledTimes == 393);
+	assert(metrics.hadToCalculate == 196);
+	assert(metrics.gotFromCache == 169);
+}
+
+void testHugeMemoizedVersion() {
+	int const larger_size = 20;
+	memoizedVersion::Metrics metrics;
+	int result = memoizedVersion::NumPaths<larger_size>(1, 1, metrics);
+
+//	metrics.print();
+	assert(result == 985525432);
+	assert(metrics.calledTimes == 723);
+	assert(metrics.hadToCalculate == 361);
+	assert(metrics.gotFromCache == 324);
+}
