@@ -1,0 +1,21 @@
+//============================================================================
+// Name        : Lab 8
+// Author      : Benjamin Liden
+// Date        : April 9, 2021
+// Professor   : Ivan Temesvari
+// Course	   : CS240 C++ Data Structures
+//============================================================================
+
+	For my simulation as written, only roughly 2/3 of the simulations were able to complete 50 jobs within 2,700 cycles. Looking at my latest run,
+687 simulations finished their jobs, while 313 were incomplete. When looking at averaged metrics, the heap size stayed near 5 items. 
+Looking at individual trials, the worst case metrics were ones where the heap grew between 10 and 13. The biggest swing factor, 
+in my opinion, is the 50% chance to add a job every 20 cycles. When programming, I made the decision to not preload the PQ with tasks. 
+This is because a scheduler, in a wider environment, will not have a consistent flow of tasks. There were many cases when testing on a single basis 
+that my simulations would miss generating an initial task, then miss successive chances at adding a task. These rocky starts would doom the trials. 
+I was surprised to see simulations finish all 50 jobs requiring only ~2000 cycles. Those instances must have gotten lucky with both task generation and job generation. 
+
+	In general, this was a very fulfilling assignment. Writing a simplified version of a scheduler really allowed me to dive in some of the reference material,
+having formed the general idea first. I imagine this assignment would be very interesting to write using parallel processing. In my day-to-day work, I write 
+a lot of JavaScript. Asynchronous programming there is solely single-threaded, but very focused on efficiently using an event loop to juggle parts of tasks.
+This assignment gave me a different perspective on how an interpreter might process them. I would be interested to see how task pausing/resuming would work 
+when a super-high priority task appears.    
