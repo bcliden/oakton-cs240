@@ -1,0 +1,31 @@
+//============================================================================
+// Name        : Lab 9
+// Author      : Benjamin Liden
+// Date        : April 18, 2021
+// Professor   : Ivan Temesvari
+// Course 	   : CS240 C++ Data Structures
+//============================================================================
+
+	This report covers my efforts to test both linear and quadratic probing approaches on a variety of hash table sizes. Additionally,
+for each of these approaches, we tested a set of numbers (33, 37, 39, 41) as the constant used in the polynomial hashing function (referred to below as "a").
+All has tables used prime numbers for the table size: 8087, 84,551, 57,487, and 6,563 for texts 1-4.
+
+	Speaking generally, the quadratic probing approach had fewer collisions that linear approaches. On our second smallest text, 
+Text 1 (appearing to be the constitution of the United States), all of the quadratic approaches were close to 1,160,000 collisions.
+Comparatively, the linear approach yielded between 4,700,000 and 7,430,000 collisions (prime number 37 doing best). In fact, 
+across all the texts the quadratic insertion yielded far fewer collisions. Text #3 with a=39 experienced the greatest savings: the linear
+probing approach had 358,544,201 collisions while the quadratic approach had 33,920,264.
+
+	I believe the linear probing approach had much more clustering than the quadratic approach. 
+Common words like "they", "the", and "law" appeared numerous times, each insertion filling more contiguous memory from
+the initial hash value. Successive inserts of the same word would necessarily have to hop over every insertion version of 
+that word. With quadratic probing, successive inserts of a word still had to hop past others, but the likelihood of hitting nearby
+word clusters (compare multiple instances of 'law' and 'lane') was much lower. From what I have read in Tang [1], linear probing does have
+better space complexity than quadratic probing in that *every* possible hash table slot can be filled. Quadratic probing, on the other hand, can only 
+guarantee an insertion if the hash table is at 50% capacity or less. I would like to explore this limitation of quadratic probing in the future.
+
+	I am also curious if using a different hashing method, like the Cyclic Shift method of rotating the 'a' constant in a polynomial hash could
+improve performance of probing approaches. Separating similar words (again, consider "law" and "lane") would do well to reduce clustering.
+
+References:
+[1] Tang, Daisy. "CS240 -- Lecture Notes: Hashing". https://www.cpp.edu/~ftang/courses/CS240/lectures/hashing.htm

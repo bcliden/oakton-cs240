@@ -1,0 +1,108 @@
+=======================> [ Testing Linear ] <========================
+
+--------> ( hashText1.txt ) <--------
+Testing hashText1.txt with size=8087, a=33
+Number of collisions with a=33: 6716470
+
+Testing hashText1.txt with size=8087, a=37
+Number of collisions with a=37: 4708614
+
+Testing hashText1.txt with size=8087, a=39
+Number of collisions with a=39: 6344550
+
+Testing hashText1.txt with size=8087, a=41
+Number of collisions with a=41: 7433562
+
+--------> ( hashText2.txt ) <--------
+Testing hashText2.txt with size=84551, a=33
+Number of collisions with a=33: 613984651
+
+Testing hashText2.txt with size=84551, a=37
+Number of collisions with a=37: 796648709
+
+Testing hashText2.txt with size=84551, a=39
+Number of collisions with a=39: 691428962
+
+Testing hashText2.txt with size=84551, a=41
+Number of collisions with a=41: 830665509
+
+--------> ( hashText3.txt ) <--------
+Testing hashText3.txt with size=57487, a=33
+Number of collisions with a=33: 377769899
+
+Testing hashText3.txt with size=57487, a=37
+Number of collisions with a=37: 341650031
+
+Testing hashText3.txt with size=57487, a=39
+Number of collisions with a=39: 358544201
+
+Testing hashText3.txt with size=57487, a=41
+Number of collisions with a=41: 311070509
+
+--------> ( hashText4.txt ) <--------
+Testing hashText4.txt with size=6563, a=33
+Number of collisions with a=33: 2984687
+
+Testing hashText4.txt with size=6563, a=37
+Number of collisions with a=37: 3676572
+
+Testing hashText4.txt with size=6563, a=39
+Number of collisions with a=39: 2909136
+
+Testing hashText4.txt with size=6563, a=41
+Number of collisions with a=41: 2725818
+
+======================> [ Testing Quadratic ] <=======================
+
+--------> ( hashText1.txt ) <--------
+Testing hashText1.txt with size=8087, a=33
+Number of collisions with a=33: 1148028
+
+Testing hashText1.txt with size=8087, a=37
+Number of collisions with a=37: 1161428
+
+Testing hashText1.txt with size=8087, a=39
+Number of collisions with a=39: 1171278
+
+Testing hashText1.txt with size=8087, a=41
+Number of collisions with a=41: 1156047
+
+--------> ( hashText2.txt ) <--------
+Testing hashText2.txt with size=84551, a=33
+Number of collisions with a=33: 69876552
+
+Testing hashText2.txt with size=84551, a=37
+Number of collisions with a=37: 69907842
+
+Testing hashText2.txt with size=84551, a=39
+Number of collisions with a=39: 70109797
+
+Testing hashText2.txt with size=84551, a=41
+Number of collisions with a=41: 70098277
+
+--------> ( hashText3.txt ) <--------
+Testing hashText3.txt with size=57487, a=33
+Number of collisions with a=33: 33433040
+
+Testing hashText3.txt with size=57487, a=37
+Number of collisions with a=37: 33318105
+
+Testing hashText3.txt with size=57487, a=39
+Number of collisions with a=39: 33263977
+
+Testing hashText3.txt with size=57487, a=41
+Number of collisions with a=41: 33920264
+
+--------> ( hashText4.txt ) <--------
+Testing hashText4.txt with size=6563, a=33
+Number of collisions with a=33: 498336
+
+Testing hashText4.txt with size=6563, a=37
+Number of collisions with a=37: 511370
+
+Testing hashText4.txt with size=6563, a=39
+Number of collisions with a=39: 480790
+
+Testing hashText4.txt with size=6563, a=41
+Number of collisions with a=41: 493870
+
