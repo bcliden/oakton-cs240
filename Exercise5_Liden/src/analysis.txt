@@ -1,0 +1,36 @@
+//============================================================================
+// Name        : Exercise 5
+// Author      : Benjamin Liden
+// Date        : April 26, 2021
+// Professor   : Ivan Temesvari
+// Course  	   : CS240 C++ Data Structures
+//============================================================================
+
+1)	
+	Running on my own computer, which is a 2010 era Intel i5 dual core,  I gained the most from picking a
+modestly large chunk size. Using exactly 5,000,000 chunk size and 500,000 chunk size returned similar results--
+just above 2 seconds each. The best results were found using a moderate chunk size around 1 to 2 million. Here,
+the best case on my machine was 1.7s. Using very small chunks, like 3,000 was problematic. Here, the machine would
+enter a loop for minutes at a time, thread count (as measured in the windows performance monitor) near 3,000 waiting
+to be queued. In total, this took 305.7 seconds to sort. Not good.
+
+
+2) 
+	For the second set of results, I ran the tests on my neighbor's Intel i7 desktop computer. This machine has
+8 available threads, so should provide an interesting comparison. Immediately, smaller chunk sizes are a must.
+The highest available value is 2,500,000 (20M / 8 threads). This highest value performs admirably, returning in
+just 1.5 seconds. All 8 threads are saturated immediately with 2,500,000 a piece, which performs well with large
+chunk sizes. This implementation then falls into serial sorting below the chunk size. 
+
+	With smaller chunks, the performance stays relatively competitive. A chunk size of 50,000 returns 
+in 5.953 seconds. A chunk size of 3,000 performed nearly the same as the 4 core version, peaking at 25,000 threads 
+(not exclusive to the program), and saturating all 8 cores. This implementation returned in 312 seconds. I believe
+the overhead of opening/closing threads got the better of the test.
+
+One can observe the spawning and resolving of threads in the windows performance monitor as a measure of 
+completion status. Given the huge number of threads used here, I have to believe there is a better way to manage threads.
+
+I could not break 1.4 seconds when tweaking the chunk parameters. Given that the arrays are all merged serially, I 
+believe this is the limiting factor for the program. To further optimize, I would explore multithreading the merge process.
+
+
